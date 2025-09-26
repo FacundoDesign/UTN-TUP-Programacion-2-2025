@@ -1,0 +1,8 @@
+public class PruebaEscritorio {
+    public static void main(String[] args) {
+        int a = 5;              // Línea 1
+        int b = 2;              // Línea 2
+        int resultado = a / b;   // Línea 3
+        System.out.println("Resultado: " + resultado); // Línea 4
+    }
+}
