@@ -9,7 +9,7 @@ Tecnicatura Universitaria en Programación
 Nombre: Archiria, Facundo
 Comisión: M2025-2
 📂 Descripción del Repositorio
-Este repositorio almacena todas los trabajos prácticos realizados durante la cursada de Programación 1.
+Este repositorio almacena todas los trabajos prácticos realizados durante la cursada de Programación 2.
 
 📌 Estructura del repositorio:
 
