@@ -1,0 +1,93 @@
+// Ejercicio 1: Registro de Estudiantes
+public class Estudiante {
+    // Atributos privados
+    private String nombre;
+    private String apellido;
+    private String curso;
+    private double calificacion;
+    
+    // Constructor
+    public Estudiante(String nombre, String apellido, String curso, double calificacion) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.curso = curso;
+        this.calificacion = calificacion;
+    }
+    
+    // Método para mostrar información del estudiante
+    public void mostrarInfo() {
+        System.out.println("=== Información del Estudiante ===");
+        System.out.println("Nombre: " + nombre + " " + apellido);
+        System.out.println("Curso: " + curso);
+        System.out.println("Calificación: " + calificacion);
+        System.out.println("==================================\n");
+    }
+    
+    // Método para subir calificación
+    public void subirCalificacion(double puntos) {
+        calificacion += puntos;
+        System.out.println("Calificación aumentada en " + puntos + " puntos.");
+        System.out.println("Nueva calificación: " + calificacion + "\n");
+    }
+    
+    // Método para bajar calificación
+    public void bajarCalificacion(double puntos) {
+        calificacion -= puntos;
+        System.out.println("Calificación disminuida en " + puntos + " puntos.");
+        System.out.println("Nueva calificación: " + calificacion + "\n");
+    }
+    
+    // Getters
+    public String getNombre() {
+        return nombre;
+    }
+    
+    public String getApellido() {
+        return apellido;
+    }
+    
+    public String getCurso() {
+        return curso;
+    }
+    
+    public double getCalificacion() {
+        return calificacion;
+    }
+    
+    // Setters
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+    
+    public void setCurso(String curso) {
+        this.curso = curso;
+    }
+    
+    public void setCalificacion(double calificacion) {
+        this.calificacion = calificacion;
+    }
+}
+
+// Clase Main para probar
+class MainEstudiante {
+    public static void main(String[] args) {
+        // Instanciar un estudiante
+        Estudiante estudiante1 = new Estudiante("Juan", "Pérez", "Programación II", 7.5);
+        
+        // Mostrar información inicial
+        estudiante1.mostrarInfo();
+        
+        // Aumentar calificación
+        estudiante1.subirCalificacion(1.5);
+        
+        // Disminuir calificación
+        estudiante1.bajarCalificacion(0.5);
+        
+        // Mostrar información final
+        estudiante1.mostrarInfo();
+    }
+}

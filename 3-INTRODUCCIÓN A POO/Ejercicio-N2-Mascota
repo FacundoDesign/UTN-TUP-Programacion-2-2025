@@ -1,0 +1,79 @@
+// Ejercicio 2: Registro de Mascotas
+public class Mascota {
+    // Atributos privados
+    private String nombre;
+    private String especie;
+    private int edad;
+    
+    // Constructor
+    public Mascota(String nombre, String especie, int edad) {
+        this.nombre = nombre;
+        this.especie = especie;
+        this.edad = edad;
+    }
+    
+    // Método para mostrar información de la mascota
+    public void mostrarInfo() {
+        System.out.println("=== Información de la Mascota ===");
+        System.out.println("Nombre: " + nombre);
+        System.out.println("Especie: " + especie);
+        System.out.println("Edad: " + edad + " años");
+        System.out.println("=================================\n");
+    }
+    
+    // Método para cumplir años
+    public void cumplirAnios() {
+        edad++;
+        System.out.println("¡" + nombre + " cumplió años!");
+        System.out.println("Ahora tiene " + edad + " años.\n");
+    }
+    
+    // Getters
+    public String getNombre() {
+        return nombre;
+    }
+    
+    public String getEspecie() {
+        return especie;
+    }
+    
+    public int getEdad() {
+        return edad;
+    }
+    
+    // Setters
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    
+    public void setEspecie(String especie) {
+        this.especie = especie;
+    }
+    
+    public void setEdad(int edad) {
+        if (edad >= 0) {
+            this.edad = edad;
+        } else {
+            System.out.println("La edad no puede ser negativa.");
+        }
+    }
+}
+
+// Clase Main para probar
+class MainMascota {
+    public static void main(String[] args) {
+        // Crear una mascota
+        Mascota miMascota = new Mascota("Max", "Perro", 3);
+        
+        // Mostrar información inicial
+        miMascota.mostrarInfo();
+        
+        // Simular el paso del tiempo (2 años)
+        System.out.println("--- Simulando el paso del tiempo ---\n");
+        miMascota.cumplirAnios();
+        miMascota.cumplirAnios();
+        
+        // Verificar los cambios
+        miMascota.mostrarInfo();
+    }
+}

@@ -1,0 +1,100 @@
+// Ejercicio 4: Gestión de Gallinas en Granja Digital
+public class Gallina {
+    // Atributos privados
+    private int idGallina;
+    private int edad;
+    private int huevosPuestos;
+    
+    // Constructor
+    public Gallina(int idGallina, int edad) {
+        this.idGallina = idGallina;
+        this.edad = edad;
+        this.huevosPuestos = 0; // Inicialmente no ha puesto huevos
+    }
+    
+    // Método para poner un huevo
+    public void ponerHuevo() {
+        huevosPuestos++;
+        System.out.println("Gallina #" + idGallina + " puso un huevo.");
+        System.out.println("Total de huevos puestos: " + huevosPuestos + "\n");
+    }
+    
+    // Método para envejecer
+    public void envejecer() {
+        edad++;
+        System.out.println("Gallina #" + idGallina + " envejeció.");
+        System.out.println("Nueva edad: " + edad + " años\n");
+    }
+    
+    // Método para mostrar estado
+    public void mostrarEstado() {
+        System.out.println("=== Estado de la Gallina #" + idGallina + " ===");
+        System.out.println("ID: " + idGallina);
+        System.out.println("Edad: " + edad + " años");
+        System.out.println("Huevos puestos: " + huevosPuestos);
+        System.out.println("======================================\n");
+    }
+    
+    // Getters
+    public int getIdGallina() {
+        return idGallina;
+    }
+    
+    public int getEdad() {
+        return edad;
+    }
+    
+    public int getHuevosPuestos() {
+        return huevosPuestos;
+    }
+    
+    // Setters
+    public void setIdGallina(int idGallina) {
+        this.idGallina = idGallina;
+    }
+    
+    public void setEdad(int edad) {
+        if (edad >= 0) {
+            this.edad = edad;
+        } else {
+            System.out.println("La edad no puede ser negativa.");
+        }
+    }
+}
+
+// Clase Main para probar
+class MainGallina {
+    public static void main(String[] args) {
+        // Crear dos gallinas
+        Gallina gallina1 = new Gallina(1, 1);
+        Gallina gallina2 = new Gallina(2, 2);
+        
+        System.out.println("=== GRANJA DIGITAL ===\n");
+        
+        // Mostrar estado inicial
+        System.out.println("--- Estado Inicial ---");
+        gallina1.mostrarEstado();
+        gallina2.mostrarEstado();
+        
+        // Simular acciones de la gallina 1
+        System.out.println("--- Acciones de Gallina #1 ---");
+        gallina1.ponerHuevo();
+        gallina1.ponerHuevo();
+        gallina1.envejecer();
+        gallina1.ponerHuevo();
+        
+        // Simular acciones de la gallina 2
+        System.out.println("--- Acciones de Gallina #2 ---");
+        gallina2.envejecer();
+        gallina2.ponerHuevo();
+        gallina2.envejecer();
+        gallina2.ponerHuevo();
+        gallina2.ponerHuevo();
+        gallina2.ponerHuevo();
+        
+        // Mostrar estado final
+        System.out.println("--- Estado Final ---");
+        gallina1.mostrarEstado();
+        gallina2.mostrarEstado();
+    }
+}

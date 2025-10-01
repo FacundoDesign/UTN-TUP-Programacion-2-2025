@@ -1,0 +1,75 @@
+// Ejercicio 3: Encapsulamiento con la Clase Libro
+public class Libro {
+    // Atributos privados
+    private String titulo;
+    private String autor;
+    private int anioPublicacion;
+    
+    // Constructor
+    public Libro(String titulo, String autor, int anioPublicacion) {
+        this.titulo = titulo;
+        this.autor = autor;
+        this.anioPublicacion = anioPublicacion;
+    }
+    
+    // Getters para todos los atributos
+    public String getTitulo() {
+        return titulo;
+    }
+    
+    public String getAutor() {
+        return autor;
+    }
+    
+    public int getAnioPublicacion() {
+        return anioPublicacion;
+    }
+    
+    // Setter con validación para año de publicación
+    public void setAnioPublicacion(int anioPublicacion) {
+        // Validación: el año debe estar entre 1000 y el año actual
+        if (anioPublicacion >= 1000 && anioPublicacion <= 2025) {
+            this.anioPublicacion = anioPublicacion;
+            System.out.println("Año de publicación actualizado correctamente a: " + anioPublicacion + "\n");
+        } else {
+            System.out.println("Error: Año inválido. Debe estar entre 1000 y 2025.");
+            System.out.println("El año de publicación no ha sido modificado.\n");
+        }
+    }
+    
+    // Método para mostrar información del libro
+    public void mostrarInfo() {
+        System.out.println("=== Información del Libro ===");
+        System.out.println("Título: " + titulo);
+        System.out.println("Autor: " + autor);
+        System.out.println("Año de Publicación: " + anioPublicacion);
+        System.out.println("=============================\n");
+    }
+}
+
+// Clase Main para probar
+class MainLibro {
+    public static void main(String[] args) {
+        // Crear un libro
+        Libro libro1 = new Libro("Cien Años de Soledad", "Gabriel García Márquez", 1967);
+        
+        // Mostrar información inicial
+        System.out.println("--- Información Inicial ---");
+        libro1.mostrarInfo();
+        
+        // Intentar modificar el año con un valor inválido
+        System.out.println("--- Intentando modificar con año inválido ---");
+        libro1.setAnioPublicacion(3000);
+        
+        // Intentar modificar el año con otro valor inválido
+        libro1.setAnioPublicacion(500);
+        
+        // Modificar el año con un valor válido
+        System.out.println("--- Modificando con año válido ---");
+        libro1.setAnioPublicacion(1970);
+        
+        // Mostrar información final
+        System.out.println("--- Información Final ---");
+        libro1.mostrarInfo();
+    }
+}

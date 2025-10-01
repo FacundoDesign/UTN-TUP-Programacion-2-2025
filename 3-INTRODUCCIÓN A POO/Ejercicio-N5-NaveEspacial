@@ -1,0 +1,150 @@
+// EJERCICIO 5: SIMULACIÓN DE NAVE ESPACIAL
+
+public class NaveEspacial {
+    // Atributos privados
+    private String nombre;
+    private double combustible;
+    private static final double COMBUSTIBLE_MAXIMO = 100.0;
+    private static final double CONSUMO_POR_KM = 0.5;
+    private static final double COMBUSTIBLE_DESPEGUE = 10.0;
+    private boolean despegada;
+    
+    // Constructor
+    public NaveEspacial(String nombre, double combustible) {
+        this.nombre = nombre;
+        if (combustible > COMBUSTIBLE_MAXIMO) {
+            this.combustible = COMBUSTIBLE_MAXIMO;
+            System.out.println("El combustible inicial excede el máximo.");
+            System.out.println("Se ajustó a " + COMBUSTIBLE_MAXIMO + " unidades.\n");
+        } else {
+            this.combustible = combustible;
+        }
+        this.despegada = false;
+    }
+    
+    // Método para despegar
+    public void despegar() {
+        if (!despegada) {
+            if (combustible >= COMBUSTIBLE_DESPEGUE) {
+                despegada = true;
+                combustible -= COMBUSTIBLE_DESPEGUE;
+                System.out.println("¡" + nombre + " ha despegado exitosamente!");
+                System.out.println("Se consumieron " + COMBUSTIBLE_DESPEGUE + " unidades de combustible.");
+                System.out.println("Combustible restante: " + combustible + " unidades\n");
+            } else {
+                System.out.println("Error: Combustible insuficiente para despegar.");
+                System.out.println("Se requieren al menos " + COMBUSTIBLE_DESPEGUE + " unidades.");
+                System.out.println("Tienes: " + combustible + " unidades\n");
+            }
+        } else {
+            System.out.println("La nave ya está en el espacio.\n");
+        }
+    }
+    
+    // Método para avanzar una distancia
+    public void avanzar(double distancia) {
+        if (!despegada) {
+            System.out.println("Error: La nave debe despegar primero antes de avanzar.\n");
+            return;
+        }
+        
+        double combustibleNecesario = distancia * CONSUMO_POR_KM;
+        
+        if (combustible >= combustibleNecesario) {
+            combustible -= combustibleNecesario;
+            System.out.println(nombre + " avanzó " + distancia + " km.");
+            System.out.println("Combustible consumido: " + combustibleNecesario + " unidades");
+            System.out.println("Combustible restante: " + combustible + " unidades\n");
+        } else {
+            System.out.println("Error: Combustible insuficiente para avanzar " + distancia + " km.");
+            System.out.println("Necesitas: " + combustibleNecesario + " unidades");
+            System.out.println("Tienes: " + combustible + " unidades\n");
+        }
+    }
+    
+    // Método para recargar combustible
+    public void recargarCombustible(double cantidad) {
+        if (cantidad <= 0) {
+            System.out.println("Error: La cantidad debe ser mayor a cero.\n");
+            return;
+        }
+        
+        double combustibleAntes = combustible;
+        combustible += cantidad;
+        
+        if (combustible > COMBUSTIBLE_MAXIMO) {
+            combustible = COMBUSTIBLE_MAXIMO;
+            System.out.println("Se alcanzó el límite máximo de combustible.");
+            System.out.println("Se recargaron " + (COMBUSTIBLE_MAXIMO - combustibleAntes) + " unidades.");
+        } else {
+            System.out.println("Se recargaron " + cantidad + " unidades de combustible.");
+        }
+        
+        System.out.println("Combustible actual: " + combustible + "/" + COMBUSTIBLE_MAXIMO + " unidades\n");
+    }
+    
+    // Método para mostrar estado
+    public void mostrarEstado() {
+        System.out.println("=== Estado de " + nombre + " ===");
+        System.out.println("Nombre: " + nombre);
+        System.out.println("Combustible: " + combustible + "/" + COMBUSTIBLE_MAXIMO + " unidades");
+        System.out.println("Estado: " + (despegada ? "En el espacio" : "En tierra"));
+        System.out.println("====================================\n");
+    }
+    
+    // Getters
+    public String getNombre() {
+        return nombre;
+    }
+    
+    public double getCombustible() {
+        return combustible;
+    }
+    
+    public boolean isDespegada() {
+        return despegada;
+    }
+    
+    // Método main para probar la clase
+    public static void main(String[] args) {
+        System.out.println("========== EJERCICIO 5: SIMULACIÓN DE NAVE ESPACIAL ==========\n");
+        
+        // Crear una nave con 50 unidades de combustible
+        NaveEspacial nave = new NaveEspacial("Odyssey", 50);
+        
+        // Mostrar estado inicial
+        System.out.println("--- Estado Inicial ---");
+        nave.mostrarEstado();
+        
+        // Intentar avanzar sin despegar
+        System.out.println("--- Intento de avanzar sin despegar ---");
+        nave.avanzar(20);
+        
+        // Despegar
+        System.out.println("--- Despegue ---");
+        nave.despegar();
+        nave.mostrarEstado();
+        
+        // Intentar avanzar sin suficiente combustible
+        System.out.println("--- Intento de avanzar sin suficiente combustible ---");
+        nave.avanzar(100);
+        
+        // Recargar combustible
+        System.out.println("--- Recarga de Combustible ---");
+        nave.recargarCombustible(60);
+        nave.mostrarEstado();
+        
+        // Avanzar correctamente
+        System.out.println("--- Avanzar Correctamente ---");
+        nave.avanzar(50);
+        nave.avanzar(30);
+        
+        // Intentar recargar excediendo el límite
+        System.out.println("--- Intento de recarga excesiva ---");
+        nave.recargarCombustible(200);
+        
+        // Estado final
+        System.out.println("--- Estado Final ---");
+        nave.mostrarEstado();
+    }
+}
