@@ -1,0 +1,151 @@
+// Clase Empleado
+class Empleado {
+    // Atributos de instancia (encapsulados)
+    private int id;
+    private String nombre;
+    private String puesto;
+    private double salario;
+    
+    // Atributo estático - compartido por todas las instancias
+    private static int totalEmpleados = 0;
+    
+    // Constructor sobrecargado 1: recibe todos los atributos
+    public Empleado(int id, String nombre, String puesto, double salario) {
+        this.id = id;
+        this.nombre = nombre;
+        this.puesto = puesto;
+        this.salario = salario;
+        totalEmpleados++;
+    }
+    
+    // Constructor sobrecargado 2: recibe solo nombre y puesto
+    public Empleado(String nombre, String puesto) {
+        this.id = totalEmpleados + 1; // ID automático
+        this.nombre = nombre;
+        this.puesto = puesto;
+        this.salario = 50000.0; // Salario por defecto
+        totalEmpleados++;
+    }
+    
+    // Método sobrecargado 1: actualizar salario por porcentaje
+    public void actualizarSalario(double porcentaje) {
+        this.salario = this.salario + (this.salario * porcentaje / 100);
+    }
+    
+    // Método sobrecargado 2: actualizar salario por cantidad fija
+    public void actualizarSalario(int cantidadFija) {
+        this.salario = this.salario + cantidadFija;
+    }
+    
+    // Método toString() para representación legible del objeto
+    @Override
+    public String toString() {
+        return "Empleado [ID: " + id + 
+               ", Nombre: " + nombre + 
+               ", Puesto: " + puesto + 
+               ", Salario: $" + String.format("%.2f", salario) + "]";
+    }
+    
+    // Método estático: mostrar total de empleados creados
+    public static int mostrarTotalEmpleados() {
+        return totalEmpleados;
+    }
+    
+    // Getters y Setters (encapsulamiento)
+    public int getId() {
+        return id;
+    }
+    
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    public String getNombre() {
+        return nombre;
+    }
+    
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    
+    public String getPuesto() {
+        return puesto;
+    }
+    
+    public void setPuesto(String puesto) {
+        this.puesto = puesto;
+    }
+    
+    public double getSalario() {
+        return salario;
+    }
+    
+    public void setSalario(double salario) {
+        this.salario = salario;
+    }
+}
+
+// Clase de prueba con método main
+public class SistemaGestionEmpleados {
+    public static void main(String[] args) {
+        System.out.println("=== SISTEMA DE GESTIÓN DE EMPLEADOS ===\n");
+        
+        // 1. Instanciar empleados usando el constructor completo
+        Empleado emp1 = new Empleado(1, "Juan Pérez", "Gerente de Ventas", 80000.0);
+        Empleado emp2 = new Empleado(2, "María González", "Desarrolladora Senior", 75000.0);
+        
+        // 2. Instanciar empleados usando el constructor simplificado
+        Empleado emp3 = new Empleado("Carlos Rodríguez", "Analista de Datos");
+        Empleado emp4 = new Empleado("Ana Martínez", "Diseñadora UX");
+        
+        System.out.println("--- Empleados Creados ---");
+        System.out.println(emp1);
+        System.out.println(emp2);
+        System.out.println(emp3);
+        System.out.println(emp4);
+        
+        // 3. Aplicar métodos actualizarSalario() con porcentaje
+        System.out.println("\n--- Actualizando Salarios (Porcentaje) ---");
+        System.out.println("Aumentando 15% a " + emp1.getNombre());
+        emp1.actualizarSalario(15.0);
+        System.out.println(emp1);
+        
+        System.out.println("\nAumentando 10% a " + emp3.getNombre());
+        emp3.actualizarSalario(10.0);
+        System.out.println(emp3);
+        
+        // 4. Aplicar métodos actualizarSalario() con cantidad fija
+        System.out.println("\n--- Actualizando Salarios (Cantidad Fija) ---");
+        System.out.println("Aumentando $5000 a " + emp2.getNombre());
+        emp2.actualizarSalario(5000);
+        System.out.println(emp2);
+        
+        System.out.println("\nAumentando $8000 a " + emp4.getNombre());
+        emp4.actualizarSalario(8000);
+        System.out.println(emp4);
+        
+        // 5. Mostrar total de empleados creados (método estático)
+        System.out.println("\n--- Estadísticas del Sistema ---");
+        System.out.println("Total de empleados creados: " + Empleado.mostrarTotalEmpleados());
+        
+        // 6. Demostrar uso de getters y setters (encapsulamiento)
+        System.out.println("\n--- Modificando Datos con Setters ---");
+        emp1.setPuesto("Director de Ventas");
+        System.out.println("Nuevo puesto de " + emp1.getNombre() + ": " + emp1.getPuesto());
+        
+        // 7. Crear un empleado adicional para verificar el contador
+        Empleado emp5 = new Empleado("Luis Fernández", "Contador");
+        System.out.println("\n--- Nuevo Empleado Agregado ---");
+        System.out.println(emp5);
+        System.out.println("Total de empleados actualizado: " + Empleado.mostrarTotalEmpleados());
+        
+        // 8. Resumen final
+        System.out.println("\n=== RESUMEN FINAL DE EMPLEADOS ===");
+        System.out.println(emp1);
+        System.out.println(emp2);
+        System.out.println(emp3);
+        System.out.println(emp4);
+        System.out.println(emp5);
+        System.out.println("\nTotal de empleados en el sistema: " + Empleado.mostrarTotalEmpleados());
+    }
+}
