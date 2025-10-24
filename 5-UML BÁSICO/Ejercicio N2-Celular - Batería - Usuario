@@ -1,0 +1,115 @@
+// Agregación: Celular → Batería
+// Asociación bidireccional: Celular ↔ Usuario
+
+class Bateria {
+    private String modelo;
+    private int capacidad;
+
+    public Bateria(String modelo, int capacidad) {
+        this.modelo = modelo;
+        this.capacidad = capacidad;
+    }
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public int getCapacidad() {
+        return capacidad;
+    }
+}
+
+class Celular {
+    private String imei;
+    private String marca;
+    private String modelo;
+    private Bateria bateria; // Agregación
+    private Usuario usuario; // Bidireccional
+
+    public Celular(String imei, String marca, String modelo, Bateria bateria) {
+        this.imei = imei;
+        this.marca = marca;
+        this.modelo = modelo;
+        this.bateria = bateria; // Se pasa como parámetro
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+        if (usuario != null && usuario.getCelular() != this) {
+            usuario.setCelular(this);
+        }
+    }
+
+    public String getImei() {
+        return imei;
+    }
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void mostrar() {
+        System.out.println("Celular " + marca + " " + modelo);
+        System.out.println("IMEI: " + imei);
+        System.out.println("Batería: " + bateria.getModelo() + " - " + bateria.getCapacidad() + " mAh");
+        if (usuario != null) {
+            System.out.println("Propietario: " + usuario.getNombre() + " - DNI: " + usuario.getDni());
+        }
+    }
+}
+
+class Usuario {
+    private String nombre;
+    private String dni;
+    private Celular celular; // Bidireccional
+
+    public Usuario(String nombre, String dni) {
+        this.nombre = nombre;
+        this.dni = dni;
+    }
+
+    public void setCelular(Celular celular) {
+        this.celular = celular;
+        if (celular != null && celular.getUsuario() != this) {
+            celular.setUsuario(this);
+        }
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public Celular getCelular() {
+        return celular;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("=== EJERCICIO 2: CELULAR - BATERÍA - USUARIO ===\n");
+        
+        Bateria bateria = new Bateria("Li-Ion 5000", 5000);
+        Celular celular = new Celular("123456789012345", "Samsung", "Galaxy S23", bateria);
+        Usuario usuario = new Usuario("Carlos Pérez", "40256789");
+        
+        celular.setUsuario(usuario);
+        
+        celular.mostrar();
+        System.out.println("\nVerificación bidireccional:");
+        System.out.println("El usuario " + usuario.getNombre() + 
+                         " tiene un " + usuario.getCelular().getMarca() + 
+                         " " + usuario.getCelular().getModelo());
+    }
+}

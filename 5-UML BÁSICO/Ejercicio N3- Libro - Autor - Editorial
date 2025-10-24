@@ -1,0 +1,87 @@
+// Asociación unidireccional: Libro → Autor
+// Agregación: Libro → Editorial
+
+class Autor {
+    private String nombre;
+    private String nacionalidad;
+
+    public Autor(String nombre, String nacionalidad) {
+        this.nombre = nombre;
+        this.nacionalidad = nacionalidad;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getNacionalidad() {
+        return nacionalidad;
+    }
+}
+
+class Editorial {
+    private String nombre;
+    private String direccion;
+
+    public Editorial(String nombre, String direccion) {
+        this.nombre = nombre;
+        this.direccion = direccion;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+}
+
+class Libro {
+    private String titulo;
+    private String isbn;
+    private Autor autor; // Asociación unidireccional
+    private Editorial editorial; // Agregación
+
+    public Libro(String titulo, String isbn, Editorial editorial) {
+        this.titulo = titulo;
+        this.isbn = isbn;
+        this.editorial = editorial;
+    }
+
+    public void setAutor(Autor autor) {
+        this.autor = autor;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void mostrar() {
+        System.out.println("Libro: " + titulo);
+        System.out.println("ISBN: " + isbn);
+        if (autor != null) {
+            System.out.println("Autor: " + autor.getNombre() + " (" + autor.getNacionalidad() + ")");
+        }
+        System.out.println("Editorial: " + editorial.getNombre());
+        System.out.println("Dirección: " + editorial.getDireccion());
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("=== EJERCICIO 3: LIBRO - AUTOR - EDITORIAL ===\n");
+        
+        Autor autor = new Autor("Gabriel García Márquez", "Colombiano");
+        Editorial editorial = new Editorial("Editorial Sudamericana", "Av. Corrientes 1234");
+        Libro libro = new Libro("Cien Años de Soledad", "978-0307474728", editorial);
+        
+        libro.setAutor(autor);
+        
+        libro.mostrar();
+    }
+}

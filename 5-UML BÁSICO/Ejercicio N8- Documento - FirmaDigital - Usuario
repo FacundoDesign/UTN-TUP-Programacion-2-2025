@@ -1,0 +1,91 @@
+// Composición: Documento → FirmaDigital
+// Agregación: FirmaDigital → Usuario
+
+class Usuario {
+    private String nombre;
+    private String email;
+
+    public Usuario(String nombre, String email) {
+        this.nombre = nombre;
+        this.email = email;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+}
+
+class FirmaDigital {
+    private String codigoHash;
+    private String fecha;
+    private Usuario usuario; // Agregación
+
+    public FirmaDigital(String codigoHash, String fecha, Usuario usuario) {
+        this.codigoHash = codigoHash;
+        this.fecha = fecha;
+        this.usuario = usuario;
+    }
+
+    public String getCodigoHash() {
+        return codigoHash;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+}
+
+class Documento {
+    private String titulo;
+    private String contenido;
+    private FirmaDigital firmaDigital; // Composición
+
+    public Documento(String titulo, String contenido, String codigoHash, String fecha, Usuario usuario) {
+        this.titulo = titulo;
+        this.contenido = contenido;
+        this.firmaDigital = new FirmaDigital(codigoHash, fecha, usuario); // Se crea internamente
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public String getContenido() {
+        return contenido;
+    }
+
+    public void mostrar() {
+        System.out.println("Documento: " + titulo);
+        System.out.println("Contenido: " + contenido);
+        System.out.println("Firma Digital:");
+        System.out.println("  Hash: " + firmaDigital.getCodigoHash());
+        System.out.println("  Fecha: " + firmaDigital.getFecha());
+        System.out.println("  Firmante: " + firmaDigital.getUsuario().getNombre() + 
+                         " (" + firmaDigital.getUsuario().getEmail() + ")");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("=== EJERCICIO 8: DOCUMENTO - FIRMA DIGITAL - USUARIO ===\n");
+        
+        Usuario usuario = new Usuario("Patricia Silva", "patricia.silva@email.com");
+        Documento documento = new Documento(
+            "Contrato de Trabajo", 
+            "Acuerdo entre las partes...", 
+            "a1b2c3d4e5f6", 
+            "08/10/2025", 
+            usuario
+        );
+        
+        documento.mostrar();
+    }
+}

@@ -1,0 +1,94 @@
+// Asociación unidireccional: CitaMédica → Paciente
+// Asociación unidireccional: CitaMédica → Profesional
+
+class Paciente {
+    private String nombre;
+    private String obraSocial;
+
+    public Paciente(String nombre, String obraSocial) {
+        this.nombre = nombre;
+        this.obraSocial = obraSocial;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getObraSocial() {
+        return obraSocial;
+    }
+}
+
+class Profesional {
+    private String nombre;
+    private String especialidad;
+
+    public Profesional(String nombre, String especialidad) {
+        this.nombre = nombre;
+        this.especialidad = especialidad;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getEspecialidad() {
+        return especialidad;
+    }
+}
+
+class CitaMedica {
+    private String fecha;
+    private String hora;
+    private Paciente paciente; // Asociación unidireccional
+    private Profesional profesional; // Asociación unidireccional
+
+    public CitaMedica(String fecha, String hora) {
+        this.fecha = fecha;
+        this.hora = hora;
+    }
+
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
+    }
+
+    public void setProfesional(Profesional profesional) {
+        this.profesional = profesional;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public String getHora() {
+        return hora;
+    }
+
+    public void mostrar() {
+        System.out.println("Cita Médica");
+        System.out.println("Fecha: " + fecha + " - Hora: " + hora);
+        if (paciente != null) {
+            System.out.println("Paciente: " + paciente.getNombre() + 
+                             " - Obra Social: " + paciente.getObraSocial());
+        }
+        if (profesional != null) {
+            System.out.println("Profesional: " + profesional.getNombre() + 
+                             " - Especialidad: " + profesional.getEspecialidad());
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("=== EJERCICIO 9: CITA MÉDICA - PACIENTE - PROFESIONAL ===\n");
+        
+        Paciente paciente = new Paciente("Martín Rodríguez", "OSDE");
+        Profesional profesional = new Profesional("Dra. Ana Gutiérrez", "Cardiología");
+        CitaMedica cita = new CitaMedica("15/10/2025", "10:00");
+        
+        cita.setPaciente(paciente);
+        cita.setProfesional(profesional);
+        
+        cita.mostrar();
+    }
+}

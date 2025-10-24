@@ -1,0 +1,73 @@
+// Asociación unidireccional: CódigoQR → Usuario
+// Dependencia de creación: GeneradorQR.generar(String, Usuario)
+
+class Usuario {
+    private String nombre;
+    private String email;
+
+    public Usuario(String nombre, String email) {
+        this.nombre = nombre;
+        this.email = email;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+}
+
+class CodigoQR {
+    private String valor;
+    private Usuario usuario; // Asociación unidireccional
+
+    public CodigoQR(String valor) {
+        this.valor = valor;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getValor() {
+        return valor;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+}
+
+class GeneradorQR {
+    // Dependencia de creación: crea un CodigoQR internamente sin guardarlo
+    public void generar(String valor, Usuario usuario) {
+        // Crea el objeto CodigoQR dentro del método
+        CodigoQR codigoQR = new CodigoQR(valor);
+        codigoQR.setUsuario(usuario);
+        
+        System.out.println("✓ Código QR generado exitosamente");
+        System.out.println("  Valor: " + codigoQR.getValor());
+        if (codigoQR.getUsuario() != null) {
+            System.out.println("  Usuario: " + codigoQR.getUsuario().getNombre());
+            System.out.println("  Email: " + codigoQR.getUsuario().getEmail());
+        }
+        System.out.println("  [■■■■■■■■■■]");
+        System.out.println();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("=== EJERCICIO 13: GENERADOR QR - USUARIO - CÓDIGO QR ===");
+        System.out.println("(Dependencia de Creación)\n");
+        
+        Usuario usuario = new Usuario("Diego Ramírez", "diego.ramirez@email.com");
+        GeneradorQR generador = new GeneradorQR();
+        
+        // El generador crea internamente el código QR
+        generador.generar("https://www.ejemplo.com/perfil/diego", usuario);
+        generador.generar("https://www.ejemplo.com/pago/12345", usuario);
+    }
+}

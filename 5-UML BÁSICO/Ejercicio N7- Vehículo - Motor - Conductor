@@ -1,0 +1,109 @@
+// Agregación: Vehículo → Motor
+// Asociación bidireccional: Vehículo ↔ Conductor
+
+class Motor {
+    private String tipo;
+    private String numeroSerie;
+
+    public Motor(String tipo, String numeroSerie) {
+        this.tipo = tipo;
+        this.numeroSerie = numeroSerie;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public String getNumeroSerie() {
+        return numeroSerie;
+    }
+}
+
+class Vehiculo {
+    private String patente;
+    private String modelo;
+    private Motor motor; // Agregación
+    private Conductor conductor; // Bidireccional
+
+    public Vehiculo(String patente, String modelo, Motor motor) {
+        this.patente = patente;
+        this.modelo = modelo;
+        this.motor = motor;
+    }
+
+    public void setConductor(Conductor conductor) {
+        this.conductor = conductor;
+        if (conductor != null && conductor.getVehiculo() != this) {
+            conductor.setVehiculo(this);
+        }
+    }
+
+    public String getPatente() {
+        return patente;
+    }
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public Conductor getConductor() {
+        return conductor;
+    }
+
+    public void mostrar() {
+        System.out.println("Vehículo: " + modelo);
+        System.out.println("Patente: " + patente);
+        System.out.println("Motor: " + motor.getTipo() + " - Serie: " + motor.getNumeroSerie());
+        if (conductor != null) {
+            System.out.println("Conductor: " + conductor.getNombre() + 
+                             " - Licencia: " + conductor.getLicencia());
+        }
+    }
+}
+
+class Conductor {
+    private String nombre;
+    private String licencia;
+    private Vehiculo vehiculo; // Bidireccional
+
+    public Conductor(String nombre, String licencia) {
+        this.nombre = nombre;
+        this.licencia = licencia;
+    }
+
+    public void setVehiculo(Vehiculo vehiculo) {
+        this.vehiculo = vehiculo;
+        if (vehiculo != null && vehiculo.getConductor() != this) {
+            vehiculo.setConductor(this);
+        }
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getLicencia() {
+        return licencia;
+    }
+
+    public Vehiculo getVehiculo() {
+        return vehiculo;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("=== EJERCICIO 7: VEHÍCULO - MOTOR - CONDUCTOR ===\n");
+        
+        Motor motor = new Motor("V6 3.5L", "MOT-2024-5678");
+        Vehiculo vehiculo = new Vehiculo("ABC-123", "Toyota Camry", motor);
+        Conductor conductor = new Conductor("Roberto Díaz", "B-12345678");
+        
+        vehiculo.setConductor(conductor);
+        
+        vehiculo.mostrar();
+        System.out.println("\nVerificación bidireccional:");
+        System.out.println("El conductor " + conductor.getNombre() + 
+                         " maneja un " + conductor.getVehiculo().getModelo());
+    }
+}

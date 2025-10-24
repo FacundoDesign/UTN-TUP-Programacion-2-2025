@@ -1,0 +1,109 @@
+// Composición: Computadora → PlacaMadre
+// Asociación bidireccional: Computadora ↔ Propietario
+
+class PlacaMadre {
+    private String modelo;
+    private String chipset;
+
+    public PlacaMadre(String modelo, String chipset) {
+        this.modelo = modelo;
+        this.chipset = chipset;
+    }
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public String getChipset() {
+        return chipset;
+    }
+}
+
+class Computadora {
+    private String marca;
+    private String numeroSerie;
+    private PlacaMadre placaMadre; // Composición
+    private Propietario propietario; // Bidireccional
+
+    public Computadora(String marca, String numeroSerie, String modeloPlaca, String chipset) {
+        this.marca = marca;
+        this.numeroSerie = numeroSerie;
+        this.placaMadre = new PlacaMadre(modeloPlaca, chipset); // Se crea internamente
+    }
+
+    public void setPropietario(Propietario propietario) {
+        this.propietario = propietario;
+        if (propietario != null && propietario.getComputadora() != this) {
+            propietario.setComputadora(this);
+        }
+    }
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public String getNumeroSerie() {
+        return numeroSerie;
+    }
+
+    public Propietario getPropietario() {
+        return propietario;
+    }
+
+    public void mostrar() {
+        System.out.println("Computadora " + marca);
+        System.out.println("N° Serie: " + numeroSerie);
+        System.out.println("Placa Madre: " + placaMadre.getModelo() + 
+                         " - Chipset: " + placaMadre.getChipset());
+        if (propietario != null) {
+            System.out.println("Propietario: " + propietario.getNombre() + 
+                             " - DNI: " + propietario.getDni());
+        }
+    }
+}
+
+class Propietario {
+    private String nombre;
+    private String dni;
+    private Computadora computadora; // Bidireccional
+
+    public Propietario(String nombre, String dni) {
+        this.nombre = nombre;
+        this.dni = dni;
+    }
+
+    public void setComputadora(Computadora computadora) {
+        this.computadora = computadora;
+        if (computadora != null && computadora.getPropietario() != this) {
+            computadora.setPropietario(this);
+        }
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public Computadora getComputadora() {
+        return computadora;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("=== EJERCICIO 5: COMPUTADORA - PLACA MADRE - PROPIETARIO ===\n");
+        
+        Computadora pc = new Computadora("Dell", "DL2024-001", "ASUS ROG Z690", "Intel Z690");
+        Propietario propietario = new Propietario("Juan Martínez", "38567890");
+        
+        pc.setPropietario(propietario);
+        
+        pc.mostrar();
+        System.out.println("\nVerificación bidireccional:");
+        System.out.println("El propietario " + propietario.getNombre() + 
+                         " tiene una PC " + propietario.getComputadora().getMarca());
+    }
+}

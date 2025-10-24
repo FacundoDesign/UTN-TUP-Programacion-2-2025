@@ -1,0 +1,81 @@
+// Asociación unidireccional: Impuesto → Contribuyente
+// Dependencia de uso: Calculadora.calcular(Impuesto)
+
+class Contribuyente {
+    private String nombre;
+    private String cuil;
+
+    public Contribuyente(String nombre, String cuil) {
+        this.nombre = nombre;
+        this.cuil = cuil;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getCuil() {
+        return cuil;
+    }
+}
+
+class Impuesto {
+    private double monto;
+    private Contribuyente contribuyente; // Asociación unidireccional
+
+    public Impuesto(double monto) {
+        this.monto = monto;
+    }
+
+    public void setContribuyente(Contribuyente contribuyente) {
+        this.contribuyente = contribuyente;
+    }
+
+    public double getMonto() {
+        return monto;
+    }
+
+    public Contribuyente getContribuyente() {
+        return contribuyente;
+    }
+}
+
+class Calculadora {
+    // Dependencia de uso: utiliza Impuesto como parámetro sin guardarlo
+    public void calcular(Impuesto impuesto) {
+        System.out.println("=== CÁLCULO DE IMPUESTO ===");
+        if (impuesto.getContribuyente() != null) {
+            System.out.println("Contribuyente: " + impuesto.getContribuyente().getNombre());
+            System.out.println("CUIL: " + impuesto.getContribuyente().getCuil());
+        }
+        System.out.println("Monto base: $" + impuesto.getMonto());
+        
+        double iva = impuesto.getMonto() * 0.21;
+        double total = impuesto.getMonto() + iva;
+        
+        System.out.println("IVA (21%): $" + iva);
+        System.out.println("TOTAL A PAGAR: $" + total);
+        System.out.println("==========================\n");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("=== EJERCICIO 12: IMPUESTO - CONTRIBUYENTE - CALCULADORA ===");
+        System.out.println("(Dependencia de Uso)\n");
+        
+        Contribuyente contrib = new Contribuyente("Empresa XYZ S.A.", "20-12345678-9");
+        Impuesto impuesto = new Impuesto(50000.00);
+        impuesto.setContribuyente(contrib);
+        
+        Calculadora calculadora = new Calculadora();
+        
+        // La calculadora usa temporalmente el impuesto para calcularlo
+        calculadora.calcular(impuesto);
+        
+        // Otro cálculo
+        Impuesto impuesto2 = new Impuesto(75000.00);
+        impuesto2.setContribuyente(contrib);
+        calculadora.calcular(impuesto2);
+    }
+}

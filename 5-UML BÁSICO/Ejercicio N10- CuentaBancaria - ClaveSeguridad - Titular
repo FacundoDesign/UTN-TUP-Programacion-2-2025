@@ -1,0 +1,114 @@
+// Composición: CuentaBancaria → ClaveSeguridad
+// Asociación bidireccional: CuentaBancaria ↔ Titular
+
+class ClaveSeguridad {
+    private String codigo;
+    private String ultimaModificacion;
+
+    public ClaveSeguridad(String codigo, String ultimaModificacion) {
+        this.codigo = codigo;
+        this.ultimaModificacion = ultimaModificacion;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public String getUltimaModificacion() {
+        return ultimaModificacion;
+    }
+}
+
+class CuentaBancaria {
+    private String cbu;
+    private double saldo;
+    private ClaveSeguridad claveSeguridad; // Composición
+    private Titular titular; // Bidireccional
+
+    public CuentaBancaria(String cbu, double saldo, String codigoClave, String fechaModificacion) {
+        this.cbu = cbu;
+        this.saldo = saldo;
+        this.claveSeguridad = new ClaveSeguridad(codigoClave, fechaModificacion); // Se crea internamente
+    }
+
+    public void setTitular(Titular titular) {
+        this.titular = titular;
+        if (titular != null && titular.getCuenta() != this) {
+            titular.setCuenta(this);
+        }
+    }
+
+    public String getCbu() {
+        return cbu;
+    }
+
+    public double getSaldo() {
+        return saldo;
+    }
+
+    public Titular getTitular() {
+        return titular;
+    }
+
+    public void mostrar() {
+        System.out.println("Cuenta Bancaria");
+        System.out.println("CBU: " + cbu);
+        System.out.println("Saldo: $" + saldo);
+        System.out.println("Clave de Seguridad: " + claveSeguridad.getCodigo() + 
+                         " (última modificación: " + claveSeguridad.getUltimaModificacion() + ")");
+        if (titular != null) {
+            System.out.println("Titular: " + titular.getNombre() + " - DNI: " + titular.getDni());
+        }
+    }
+}
+
+class Titular {
+    private String nombre;
+    private String dni;
+    private CuentaBancaria cuenta; // Bidireccional
+
+    public Titular(String nombre, String dni) {
+        this.nombre = nombre;
+        this.dni = dni;
+    }
+
+    public void setCuenta(CuentaBancaria cuenta) {
+        this.cuenta = cuenta;
+        if (cuenta != null && cuenta.getTitular() != this) {
+            cuenta.setTitular(this);
+        }
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public CuentaBancaria getCuenta() {
+        return cuenta;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("=== EJERCICIO 10: CUENTA BANCARIA - CLAVE SEGURIDAD - TITULAR ===\n");
+        
+        CuentaBancaria cuenta = new CuentaBancaria(
+            "0000003100012345678901", 
+            150000.50, 
+            "****5678", 
+            "01/10/2025"
+        );
+        Titular titular = new Titular("Sofía Morales", "29876543");
+        
+        cuenta.setTitular(titular);
+        
+        cuenta.mostrar();
+        System.out.println("\nVerificación bidireccional:");
+        System.out.println("El titular " + titular.getNombre() + 
+                         " tiene el CBU: " + titular.getCuenta().getCbu());
+    }
+}

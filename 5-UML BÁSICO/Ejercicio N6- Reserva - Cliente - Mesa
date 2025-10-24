@@ -1,0 +1,87 @@
+// Asociación unidireccional: Reserva → Cliente
+// Agregación: Reserva → Mesa
+
+class Cliente {
+    private String nombre;
+    private String telefono;
+
+    public Cliente(String nombre, String telefono) {
+        this.nombre = nombre;
+        this.telefono = telefono;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+}
+
+class Mesa {
+    private int numero;
+    private int capacidad;
+
+    public Mesa(int numero, int capacidad) {
+        this.numero = numero;
+        this.capacidad = capacidad;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public int getCapacidad() {
+        return capacidad;
+    }
+}
+
+class Reserva {
+    private String fecha;
+    private String hora;
+    private Cliente cliente; // Asociación unidireccional
+    private Mesa mesa; // Agregación
+
+    public Reserva(String fecha, String hora, Mesa mesa) {
+        this.fecha = fecha;
+        this.hora = hora;
+        this.mesa = mesa;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public String getHora() {
+        return hora;
+    }
+
+    public void mostrar() {
+        System.out.println("Reserva para el " + fecha + " a las " + hora);
+        System.out.println("Mesa N°: " + mesa.getNumero() + 
+                         " - Capacidad: " + mesa.getCapacidad() + " personas");
+        if (cliente != null) {
+            System.out.println("Cliente: " + cliente.getNombre() + 
+                             " - Tel: " + cliente.getTelefono());
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("=== EJERCICIO 6: RESERVA - CLIENTE - MESA ===\n");
+        
+        Mesa mesa = new Mesa(5, 4);
+        Cliente cliente = new Cliente("Laura Fernández", "11-5555-1234");
+        Reserva reserva = new Reserva("20/10/2025", "20:30", mesa);
+        
+        reserva.setCliente(cliente);
+        
+        reserva.mostrar();
+    }
+}
